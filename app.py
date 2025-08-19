@@ -2,10 +2,13 @@ import streamlit as st
 from langchain_groq import ChatGroq
 from langchain_core.prompts import ChatPromptTemplate
 from langchain_core.output_parsers import StrOutputParser
-from dotenv import load_dotenv
-load_dotenv()
-
-## conexão com a LLM
+# Para deploy, usar st.secrets ao invés de load_dotenv()
+try:
+    api_key = st.secrets["GROQ_API_KEY"]
+except:
+    st.error("⚠️ Configure a GROQ_API_KEY nas configurações do Streamlit Cloud!")
+    st.stop()
+## Conexão com a LLM
 id_model = "llama3-70b-8192"
 llm = ChatGroq(
     model=id_model,
@@ -13,8 +16,8 @@ llm = ChatGroq(
     max_tokens=None,
     timeout=None,
     max_retries=2,
+    api_key=api_key  # Adicionar explicitamente
 )
-
 ## função de geração
 def llm_generate(llm, prompt):
   template = ChatPromptTemplate.from_messages([
