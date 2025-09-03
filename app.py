@@ -9,7 +9,7 @@ except:
     st.error("⚠️ Configure a GROQ_API_KEY nas configurações do Streamlit Cloud!")
     st.stop()
 ## Conexão com a LLM
-id_model = "llama3-70b-8192"
+id_model = "llama-3.3-70b-versatile"
 llm = ChatGroq(
     model=id_model,
     temperature=0.7,
@@ -60,3 +60,4 @@ if st.button("Gerar conteúdo"):
       st.markdown(res)
   except Exception as e:
       st.error(f"Erro: {e}")
+
