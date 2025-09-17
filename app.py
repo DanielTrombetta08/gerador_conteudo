@@ -28,6 +28,8 @@ def llm_generate(llm, prompt):
   chain = template | llm | StrOutputParser()
 
   res = chain.invoke({"prompt": prompt})
+  if "</think>" in res:
+      res = res.split("</think>")[-1].strip()
   return res
 
 st.set_page_config(page_title = "Gerador de conteúdo 🤖", page_icon="🤖")
@@ -60,5 +62,6 @@ if st.button("Gerar conteúdo"):
       st.markdown(res)
   except Exception as e:
       st.error(f"Erro: {e}")
+
 
 
